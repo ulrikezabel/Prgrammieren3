@@ -1,20 +1,14 @@
-let Matrix = [
-[0, 0, 1, 0, 0],
-[1, 0, 0, 3, 0],
-[0, 1, 0, 0, 0],
-[0, 0, 1, 0, 0],
-[1, 1, 0, 0, 0],
-[1, 1, 0, 2, 0],
-[1, 1, 0, 0, 0]
-];
+var Gras=require("./Gras")
+var Grasfresser=require("./Grasfresser")
+var Fleischfresser=require("./Fleischfresser")
+var Zauberer=require("./Zauberer")
+var Naturfee=require("./Naturfee")
+var Pilz=require("./Pilz")
+
+let {random,Matrix, randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr}=require("./Allgemeines")
 let fr = 1
 let side = 20
-let grassArr = []
-let grazerArr= []
-let predatorArr=[]
 let zaubererObj= new Zauberer(14,14)
-let fairyArr=[]
-let mushroomArr=[]
 // function randomMatrix(x,y){
 //     Mat=[]
 //     for (let i=0; i<x; i++){
@@ -32,26 +26,11 @@ let mushroomArr=[]
 //     return Mat
 // }
 
-function randomMatrix(x,y){
-    Mat=[]
-    for (let i=0; i<x; i++){
-        Mat[i]=[]
-        for(let j=0; j<y; j++){
-            let a=Math.floor(random(0,2))
-            Mat[i][j]=a
 
-
-
-        }
-
-    }
-    
-    return Mat
-}
 
 
 function setup() {
-    Matrix=randomMatrix(30,30)
+
     Matrix[5][3]=2
     Matrix[2][20]=2
     Matrix[5][5]=3
@@ -60,10 +39,10 @@ function setup() {
     Matrix[9][22]=6
     // Matrix[3][3]=5
 
-    createCanvas(Matrix[0].length * side, Matrix.length * side);
-    background("#acacac")
-    noStroke()
-    frameRate(fr)
+    //createCanvas(Matrix[0].length * side, Matrix.length * side);
+    //background("#acacac")
+    //noStroke()
+    //frameRate(fr)
     
     //  let gr= new Gras(2,3)
     //  console.log(gr.chooseCell())
@@ -102,46 +81,68 @@ function setup() {
 
 
 function drawMatrix(matrix) {
-    strokeWeight(2)
-    stroke("black")
+    //strokeWeight(2)
+    //stroke("black")
     for (let i = 0; i < matrix.length; i++) {
         for (let g = 0; g < matrix[0].length; g++) {
             if (matrix[i][g] === 0) {
-                fill("white")
+                //fill("white")
             }
             else if (matrix[i][g] === 1) {
-                fill("green")
+                //fill("green")
             }
             else if (matrix[i][g] === 2) {
-                fill("yellow")
+                //fill("yellow")
             }
             else if (matrix[i][g] === 3) {
-                fill("red")
+                //fill("red")
             }
             else if (matrix[i][g] === 4) {
-                fill("purple")
+                //fill("purple")
             }
             else if (matrix[i][g] === 5) {
-                fill("pink")
+                //fill("pink")
             }
             else if (matrix[i][g] === 6) {
-                fill("blue")
+                //fill("blue")
             }
-            rect(side * g, side * i, side, side)
+            //rect(side * g, side * i, side, side)
 
         }
     }
+    for (let zeile = 0; zeile < matrix.length; zeile++) {
+        for (let spalte = 0; spalte < matrix[zeile].length; spalte++) {
+            element = matrix[zeile][spalte]
+            
+            process.stdout.write(element.toString())
+    
+
+
+
+            // ...
+          
+        }
+        // Wenn der erste Durchlauf von der Äußerden Schleife (Zeile) fertig
+        // ist, wollen wir eine neue Zeile auf der Konsole anfangen
+        process.stdout.write("\n")
+    }
+    process.stdout.write("\x1b[" + matrix.length + "A")
+
+
 }
 
 
 function draw() {
+    //console.log("Test")
     let myArr=[...mushroomArr]
+    //console.log(mushroomArr)
     for (let i = 0; i < mushroomArr.length; i++) {
         let mushroomObj = myArr[i];
         mushroomObj.explode()
         
     }
     myArr=[... grazerArr]
+    //console.log(myArr)
     for (let i = 0; i < myArr.length; i++) {
         let grazerObj= myArr[i];
         grazerObj.eat()
@@ -161,7 +162,8 @@ function draw() {
         fairyObj.fly()
         
     }
-    // myArr=[... grassArr]
+    myArr=[... grassArr]
+    
     for (let i = 0; i < grassArr.length; i++) {
         let grasObject = grassArr[i];
         grasObject.mul()
@@ -174,6 +176,12 @@ function draw() {
     drawMatrix(Matrix)
 
 }
+
+setup()
+setInterval(()=>{
+    draw()
+},1000)
+// draw()
 
 
 
