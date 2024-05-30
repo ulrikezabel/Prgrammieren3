@@ -18,6 +18,14 @@ module.exports=class Fleischfresser{
             [this.x, this.y + 1]
 
         ]
+        rn=random(0,1)
+        if (rn===0){
+            this.gender="w"
+        }
+        else if (rn===1){
+            this.gender="m"
+        }
+
 
     }
     chooseCell(type) {
@@ -101,9 +109,19 @@ module.exports=class Fleischfresser{
             
             this.foundFood=0
         }
-        if (this.foundFood>=3){
-            this.mul()
+        if (this.gender==="w"){
+
+            let fresser= this.chooseCell(3)
+            if (fresser>0){
+                let fr=random(fresser)
+                if (fr.gender!=this.gender){
+                    this.mul()}
+                
+
+            }
+
         }
+        
         else if(this.hungry>=8){
             this.die()
         }

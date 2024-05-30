@@ -18,7 +18,7 @@ function randomMatrix(x,y){
     for (let i=0; i<x; i++){
         Mat[i]=[]
         for(let j=0; j<y; j++){
-            let a=Math.floor(random(0,2))
+            let a=Math.floor(random(0, 1))
             Mat[i][j]=a
 
 

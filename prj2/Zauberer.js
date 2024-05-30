@@ -1,3 +1,5 @@
+const Grasfresser= require("./Grasfresser")
+const Fleischfresser= require("./Fleischfresser")
 let {random,Matrix, randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr}=require("./Allgemeines")
 module.exports=class Zauberer{
     constructor(x,y){
