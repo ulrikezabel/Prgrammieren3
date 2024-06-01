@@ -1,3 +1,5 @@
+const { Cipher } = require("crypto")
+const { compileFunction } = require("vm")
 let {random,Matrix, randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr}=require("./Allgemeines")
 const Grasfresser= require("./Grasfresser")
 module.exports=class Fleischfresser{
@@ -18,12 +20,15 @@ module.exports=class Fleischfresser{
             [this.x, this.y + 1]
 
         ]
-        rn=random(0,1)
+        let rn=random(0,1)
         if (rn===0){
             this.gender="w"
         }
         else if (rn===1){
             this.gender="m"
+        }
+        if (this.gender==="w"){
+            this.colorValue=7
         }
 
 
@@ -50,6 +55,9 @@ module.exports=class Fleischfresser{
     }
 
     die(){
+        console.log(this.x)
+        console.log(this.y)
+        console.log("dead")
         //Matrix aktualisieren
         Matrix[this.y][this.x]=0
         //Objekt löschen
@@ -67,8 +75,8 @@ module.exports=class Fleischfresser{
         let nachbarn = this.chooseCell(0)
             if (nachbarn.length > 0) {
                 let r = random(nachbarn)
-                let neuerFresser = new Grasfresser(r[0], r[1])
-                grazerArr.push(neuerFresser)
+                let neuerFresser = new Fleischfresser(r[0], r[1])
+                predatorArr.push(neuerFresser)
                 Matrix[r[1]][r[0]] = this.colorValue
 
 
@@ -78,6 +86,38 @@ module.exports=class Fleischfresser{
     }
 
     eat() {
+        
+        let fress
+
+        let fresser= this.chooseCell(3)
+        console.log(fresser)
+        if (fresser.length>0){
+            console.log("met")
+            let fr=random(fresser)
+            for (let i = 0; i < predatorArr.length; i++) {
+                let preObj = predatorArr[i];
+                if (preObj.x === fr[0] && preObj.y === fr[1]) {
+                    fress=preObj
+                }
+
+            }
+            console.log(fress)
+            
+            if (fress.gender!=this.gender){
+                console.log("love")
+                console.log(this.gender+fress.gender)
+                if (this.gender==="w"){
+                    this.mul()
+                }
+            }
+                    
+
+        }
+
+            
+    
+        
+
         
 
 
@@ -109,20 +149,9 @@ module.exports=class Fleischfresser{
             
             this.foundFood=0
         }
-        if (this.gender==="w"){
-
-            let fresser= this.chooseCell(3)
-            if (fresser>0){
-                let fr=random(fresser)
-                if (fr.gender!=this.gender){
-                    this.mul()}
-                
-
-            }
-
-        }
         
-        else if(this.hungry>=8){
+        
+        if(this.hungry>=8){
             this.die()
         }
 

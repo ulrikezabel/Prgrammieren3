@@ -34,6 +34,7 @@ function setup() {
     Matrix[5][3]=2
     Matrix[2][20]=2
     Matrix[5][5]=3
+    Matrix[6][5]=3
     Matrix[10][10]=5
     Matrix[13][2]=6
     Matrix[9][22]=6
@@ -114,7 +115,7 @@ function drawMatrix(matrix) {
         for (let spalte = 0; spalte < matrix[zeile].length; spalte++) {
             element = matrix[zeile][spalte]
             
-            process.stdout.write(element.toString())
+            // process.stdout.write(element.toString())
     
 
 
@@ -124,9 +125,9 @@ function drawMatrix(matrix) {
         }
         // Wenn der erste Durchlauf von der Äußerden Schleife (Zeile) fertig
         // ist, wollen wir eine neue Zeile auf der Konsole anfangen
-        process.stdout.write("\n")
+        // process.stdout.write("\n")
     }
-    process.stdout.write("\x1b[" + matrix.length + "A")
+    // process.stdout.write("\x1b[" + matrix.length + "A")
 
 
 }

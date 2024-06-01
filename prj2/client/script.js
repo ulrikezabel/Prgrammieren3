@@ -13,7 +13,7 @@ function setup() {
 socket.on('matrix', (matrix) => {
     // Die Matrix wird auf den Bildschirm gezeichnet.
     for (let i = 0; i < matrix.length; i++) {
-        for (let j = 0; j < matrix[i].length; j++) {
+        for (let j = 0; j < matrix[0].length; j++) {
             fill(matrix[i][j]);
             rect(j * cellSize, i * cellSize, cellSize, cellSize);
         }

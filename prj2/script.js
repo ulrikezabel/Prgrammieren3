@@ -71,6 +71,9 @@ function transformMatrix(matrix) {
             else if (matrix[i][g] === 6) {
                 col="blue"
             }
+            else if (matrix[i][g] === 7) {
+                col="orange"
+            }
             newMatrix[i][g]= col
         }
     }

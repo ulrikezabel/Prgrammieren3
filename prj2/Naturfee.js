@@ -1,4 +1,5 @@
 let {random, Matrix,randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr}=require("./Allgemeines")
+const Gras= require("./Gras")
 module.exports=class Naturfee{
     constructor(x,y){
         this.x=x

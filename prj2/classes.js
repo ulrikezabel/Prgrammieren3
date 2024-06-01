@@ -395,7 +395,7 @@ class Zauberer{
         for (let i=0; i<4;i++){
             let neux=Math.floor(random(0,Matrix[0].length))
             let neuy=Math.floor(random(0,Matrix.length))
-            grazerArr.push(new Fleischfresser(neux,neuy))
+            predatorArr.push(new Fleischfresser(neux,neuy))
             Matrix[neuy][neux]=3
 
         }
