@@ -1,6 +1,6 @@
 const { Cipher } = require("crypto")
 const { compileFunction } = require("vm")
-let {random,Matrix, randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr}=require("./Allgemeines")
+let {random,Matrix, randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr, krank}=require("./Allgemeines")
 const Grasfresser= require("./Grasfresser")
 module.exports=class Fleischfresser{
     constructor(x, y) {
@@ -20,6 +20,8 @@ module.exports=class Fleischfresser{
             [this.x, this.y + 1]
 
         ]
+        this.wartezeit=0
+        this.krankCount=0
         let rn=random(0,1)
         if (rn===0){
             this.gender="w"
@@ -55,9 +57,7 @@ module.exports=class Fleischfresser{
     }
 
     die(){
-        console.log(this.x)
-        console.log(this.y)
-        console.log("dead")
+
         //Matrix aktualisieren
         Matrix[this.y][this.x]=0
         //Objekt löschen
@@ -84,48 +84,12 @@ module.exports=class Fleischfresser{
         this.foundFood=0
 
     }
-
-    eat() {
-        
-        let fress
-
-        let fresser= this.chooseCell(3)
-        console.log(fresser)
-        if (fresser.length>0){
-            console.log("met")
-            let fr=random(fresser)
-            for (let i = 0; i < predatorArr.length; i++) {
-                let preObj = predatorArr[i];
-                if (preObj.x === fr[0] && preObj.y === fr[1]) {
-                    fress=preObj
-                }
-
-            }
-            console.log(fress)
-            
-            if (fress.gender!=this.gender){
-                console.log("love")
-                console.log(this.gender+fress.gender)
-                if (this.gender==="w"){
-                    this.mul()
-                }
-            }
-                    
-
-        }
-
-            
-    
-        
-
-        
-
-
+    infect(){
         let nachbarn = this.chooseCell(2)
         if (nachbarn.length > 0) {
             let r = random(nachbarn)
             Matrix[r[1]][r[0]] = this.colorValue
-            Matrix[this.y][this.x] = 0
+            
             for (let i = 0; i < grazerArr.length; i++) {
                 let grazObj = grazerArr[i];
                 if (grazObj.x === r[0] && grazObj.y === r[1]) {
@@ -134,6 +98,8 @@ module.exports=class Fleischfresser{
                 }
 
             }
+            let neuerFresser= new Fleischfresser(this.x, this.y)
+            predatorArr.push(neuerFresser)
             this.x = r[0]
             this.y = r[1]
             
@@ -154,6 +120,98 @@ module.exports=class Fleischfresser{
         if(this.hungry>=8){
             this.die()
         }
+    }
+
+    eat() {
+        this.wartezeit+=1
+        console.log("prüf krank")
+        console.log(krank)
+        if (krank===true){
+            console.log("Fresser krank")
+            if (this.krankCount<=5){
+                this.infect()
+                this.krankCount+=1
+
+            }
+            krank=false
+
+        }
+        else{
+            let fress
+
+            let fresser= this.chooseCell(3)
+            
+            if (fresser.length>0){
+                
+                let fr=random(fresser)
+                for (let i = 0; i < predatorArr.length; i++) {
+                    let preObj = predatorArr[i];
+                    if (preObj.x === fr[0] && preObj.y === fr[1]) {
+                        fress=preObj
+                    }
+
+                }
+                
+                
+                if (fress.gender!=this.gender){
+                    
+                    if (this.gender==="w"){
+                        if (this.wartezeit>=4){
+                            this.mul()
+                            console.log("vermehrt<")
+                            this.wartezeit=0
+
+                        }
+                        
+                    }
+                }
+                        
+
+            }
+
+                
+        
+            
+
+            
+
+
+            let nachbarn = this.chooseCell(2)
+            if (nachbarn.length > 0) {
+                let r = random(nachbarn)
+                Matrix[r[1]][r[0]] = this.colorValue
+                Matrix[this.y][this.x] = 0
+                for (let i = 0; i < grazerArr.length; i++) {
+                    let grazObj = grazerArr[i];
+                    if (grazObj.x === r[0] && grazObj.y === r[1]) {
+                        grazerArr.splice(i, 1)
+                        break
+                    }
+
+                }
+                this.x = r[0]
+                this.y = r[1]
+                
+                this.foundFood++
+                this.hungry=0
+
+
+
+            }
+            else {
+                this.move()
+                this.hungry++
+                
+                this.foundFood=0
+            }
+            
+            
+            if(this.hungry>=8){
+                this.die()
+            }
+
+            }
+            
 
     }
 

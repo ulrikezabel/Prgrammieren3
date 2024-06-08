@@ -8,6 +8,11 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
 }
 
+function krank(){
+    socket.emit("krank")
+    console.log("krank button")
+}
+
 // Mit socket.on() können wir auf Ereignisse vom Server reagieren.
 // Hier reagieren wir auf das Ereignis matrix, das uns die aktuelle Matrix vom Server sendet.
 socket.on('matrix', (matrix) => {

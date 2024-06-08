@@ -35,6 +35,10 @@ function setup() {
     Matrix[2][20]=2
     Matrix[5][5]=3
     Matrix[6][5]=3
+    Matrix[25][10]=3
+    Matrix[13][15]=3
+    Matrix[22][8]=3
+    Matrix[23][8]=3
     Matrix[10][10]=5
     Matrix[13][2]=6
     Matrix[9][22]=6
@@ -177,10 +181,18 @@ function draw() {
     drawMatrix(Matrix)
 
 }
+function explodiere(){
+    
+    Matrix[15][15]=0
+    Matrix[15][16]=0
+    Matrix[15][17]=0
+    Matrix[15][18]=0
+}
 
 module.exports={
     setup:setup,
-    draw:draw
+    draw:draw,
+    explodiere:explodiere
 }
 
 

@@ -36,6 +36,9 @@ let predatorArr=[]
 let fairyArr=[]
 let mushroomArr=[]
 let Matrix= randomMatrix(30,30)
+var krank= false
+
+
 module.exports={
     random:random,
     Matrix:Matrix,
@@ -44,5 +47,6 @@ module.exports={
     grazerArr:grazerArr,
     predatorArr:predatorArr,
     fairyArr:fairyArr,
-    mushroomArr:mushroomArr
+    mushroomArr:mushroomArr,
+    krank:krank
 }

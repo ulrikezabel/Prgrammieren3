@@ -1,4 +1,4 @@
-const {setup, draw}=require("./main")
+const {setup, draw, explodiere}=require("./main")
 var {Matrix}=require("./Allgemeines")
 
 const express = require('express');
@@ -33,6 +33,14 @@ io.on('connection', (socket) => {
 
         // wir stoppen das Spiel, wenn der Benutzer die Verbindung trennt
         clearInterval(intetval);
+    });
+
+
+    socket.on('krank', () => {
+        console.log("explosion gedrückt")
+        explodiere()
+        console.log("explodiert")
+        
     });
 
     setup();
