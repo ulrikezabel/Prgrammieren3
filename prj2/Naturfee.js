@@ -1,9 +1,9 @@
 let {random, Matrix,randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr}=require("./Allgemeines")
 const Gras= require("./Gras")
-module.exports=class Naturfee{
+const Wesen= require ("./Wesen")
+module.exports=class Naturfee extends Wesen{
     constructor(x,y){
-        this.x=x
-        this.y=y
+        super(x,y)
         this.seedCount=0
         this.takeCount=0
         this.colorValue=5
@@ -132,26 +132,7 @@ module.exports=class Naturfee{
         ]
     }
 
-    chooseCell(type) {
-        this.updateNeighbours()
-        //Liste aller leeren Nachbarsfelder
-        let found = []
-        for (let i = 0; i < this.neighbours.length; i++) {
-            let pos = this.neighbours[i]
-            if (pos[0] >= 0 && pos[0] < Matrix[0].length && pos[1] >= 0 && pos[1] < Matrix.length) {
-                //y-Wert zuerst
-                if (Matrix[pos[1]][pos[0]] === type) {
-                    found.push(pos)
-
-                }
-            }
-
-
-        }
-
-        return found
-
-    }
+    
     chooseFurtherCell(type) {
         this.updateNeighbours()
         //Liste aller leeren Nachbarsfelder

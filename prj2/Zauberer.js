@@ -1,10 +1,10 @@
 const Grasfresser= require("./Grasfresser")
 const Fleischfresser= require("./Fleischfresser")
 let {random,Matrix, randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr}=require("./Allgemeines")
-module.exports=class Zauberer{
+const Wesen= require ("./Wesen")
+module.exports=class Zauberer extends Wesen{
     constructor(x,y){
-        this.x=x
-        this.y=y
+        super(x,y)
         this.colorValue=4
         this.giftCount=10
 

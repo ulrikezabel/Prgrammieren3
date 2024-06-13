@@ -36,8 +36,18 @@ let predatorArr=[]
 let fairyArr=[]
 let mushroomArr=[]
 let Matrix= randomMatrix(30,30)
-var krank= false
 
+
+function machKrank(){
+    for(let i=0;i<5;i++){
+        if (predatorArr.length!=0){
+            let pr=random(predatorArr)
+            pr.krank=true
+            pr.colorValue=8
+
+        }
+    }
+}
 
 module.exports={
     random:random,
@@ -48,5 +58,5 @@ module.exports={
     predatorArr:predatorArr,
     fairyArr:fairyArr,
     mushroomArr:mushroomArr,
-    krank:krank
+    machKrank:machKrank
 }

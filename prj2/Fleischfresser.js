@@ -1,25 +1,20 @@
-const { Cipher } = require("crypto")
-const { compileFunction } = require("vm")
-let {random,Matrix, randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr, krank}=require("./Allgemeines")
-const Grasfresser= require("./Grasfresser")
-module.exports=class Fleischfresser{
-    constructor(x, y) {
-        this.x = x
-        this.y = y
-        this.colorValue = 3
-        this.hungry = 0
-        this.foundFood=0
-        this.neighbours = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x - 1, this.y + 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y - 1],
-            [this.x + 1, this.y + 1],
-            [this.x + 1, this.y],
-            [this.x, this.y + 1]
+// Erweiterung Geschlechter: 
+// Fleischfresser haben ein Geschlecht (männlich oder weiblich). 
+// Weibliche Fleischfresser sind orange, männliche rot.
+// Fleischfresser vermehren sich nur noch, wenn sie auf einen anderen Fleischfresser des anderen Geschlechts treffen.
+// nachdem sich ein Fleischfresser vermehrt hat, kann er sich für 3 Runden nicht mehr vermehren
 
-        ]
+// Durch die Betätigung des Knopfes Event werden 4 Fleischfresser mit einer Krankheit infeziert.
+// Kranke Fleischfresser sind schwarz
+// Kranke Fleischfresser wandeln 5 Runden lang jeweils einen Grasfresser in ihrer nahen Umgebung in einen ebenfalls infizierten Fleischresser um
+
+let {random,Matrix, randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr}=require("./Allgemeines")
+const Grasfresser= require("./Grasfresser")
+const Wesen= require ("./Wesen")
+module.exports=class Fleischfresser extends Wesen{
+    constructor(x, y) {
+        super(x,y)
+        this.colorValue = 3
         this.wartezeit=0
         this.krankCount=0
         let rn=random(0,1)
@@ -32,29 +27,13 @@ module.exports=class Fleischfresser{
         if (this.gender==="w"){
             this.colorValue=7
         }
+        this.krank=false
 
 
     }
-    chooseCell(type) {
-        this.updateNeighbours()
-        //Liste aller leeren Nachbarsfelder
-        let found = []
-        for (let i = 0; i < this.neighbours.length; i++) {
-            let pos = this.neighbours[i]
-            if (pos[0] >= 0 && pos[0] < Matrix[0].length && pos[1] >= 0 && pos[1] < Matrix.length) {
-                //y-Wert zuerst
-                if (Matrix[pos[1]][pos[0]] === type) {
-                    found.push(pos)
+    
 
-                }
-            }
-
-
-        }
-
-        return found
-
-    }
+    
 
     die(){
 
@@ -86,7 +65,9 @@ module.exports=class Fleischfresser{
     }
     infect(){
         let nachbarn = this.chooseCell(2)
+        
         if (nachbarn.length > 0) {
+            
             let r = random(nachbarn)
             Matrix[r[1]][r[0]] = this.colorValue
             
@@ -99,6 +80,7 @@ module.exports=class Fleischfresser{
 
             }
             let neuerFresser= new Fleischfresser(this.x, this.y)
+            neuerFresser.colorValue=8
             predatorArr.push(neuerFresser)
             this.x = r[0]
             this.y = r[1]
@@ -123,17 +105,21 @@ module.exports=class Fleischfresser{
     }
 
     eat() {
-        this.wartezeit+=1
-        console.log("prüf krank")
-        console.log(krank)
-        if (krank===true){
-            console.log("Fresser krank")
-            if (this.krankCount<=5){
+        this.wartezeit++
+        
+        
+        if (this.krank===true){
+            
+            if(this.krankCount<5){
+                
                 this.infect()
-                this.krankCount+=1
+                this.krankCount++
 
             }
-            krank=false
+            else{
+                this.krank=false
+                this.colorValue=3
+            }
 
         }
         else{
@@ -158,7 +144,7 @@ module.exports=class Fleischfresser{
                     if (this.gender==="w"){
                         if (this.wartezeit>=4){
                             this.mul()
-                            console.log("vermehrt<")
+                            
                             this.wartezeit=0
 
                         }
@@ -215,30 +201,6 @@ module.exports=class Fleischfresser{
 
     }
 
-    updateNeighbours() {
-        this.neighbours = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x - 1, this.y + 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y - 1],
-            [this.x + 1, this.y + 1],
-            [this.x + 1, this.y],
-            [this.x, this.y + 1]
+    
 
-        ]
-    }
-
-    move() {
-        this.updateNeighbours()
-        let nachbarn = this.chooseCell(0)
-        if (nachbarn.length > 0) {
-            let r = random(nachbarn)
-            Matrix[r[1]][r[0]] = this.colorValue
-            Matrix[this.y][this.x] = 0
-            this.x = r[0]
-            this.y = r[1]
-        }
-
-    }
 }

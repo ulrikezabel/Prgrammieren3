@@ -62,7 +62,7 @@ function setup() {
                 grazerArr.push(new Grasfresser(x,y))
 
             }
-            else if(Matrix[y][x]===3){
+            else if(Matrix[y][x]===3 || Matrix[y][x]===7){
                 predatorArr.push(new Fleischfresser(x,y))
 
             }

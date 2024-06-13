@@ -1,5 +1,5 @@
 const {setup, draw, explodiere}=require("./main")
-var {Matrix}=require("./Allgemeines")
+var {Matrix,machKrank}=require("./Allgemeines")
 
 const express = require('express');
 const app = express();
@@ -37,9 +37,9 @@ io.on('connection', (socket) => {
 
 
     socket.on('krank', () => {
-        console.log("explosion gedrückt")
-        explodiere()
-        console.log("explodiert")
+        
+        machKrank()
+        
         
     });
 
@@ -81,6 +81,9 @@ function transformMatrix(matrix) {
             }
             else if (matrix[i][g] === 7) {
                 col="orange"
+            }
+            else if (matrix[i][g] === 8) {
+                col="black"
             }
             newMatrix[i][g]= col
         }
