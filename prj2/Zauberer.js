@@ -1,3 +1,7 @@
+// Sind mehr als drei Viertel der Felder mit Gras belegt, erscheint ein Zauberer.
+// Er verteilt zufällig 4 Grasfresser und 4 Fleischfresser auf dem Spielfeld.
+// Anschließend verschwindet er wieder.
+// Der Zauberer erscheint, nachdem er seine "Geschenke" verteilt hat, erst nach 10 Runden wieder.
 const Grasfresser= require("./Grasfresser")
 const Fleischfresser= require("./Fleischfresser")
 let {random,Matrix, randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr}=require("./Allgemeines")

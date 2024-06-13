@@ -1,3 +1,5 @@
+// Ist der Pilz fünf Runden lang von Grasfeldern umgeben explodiert er und vernichtet alle Objekte in seiner Umgebung.
+// Ist eine Fee in der Umgebung des Pilzes sammelt sie 24 Samen von ihm und er verschwindet
 let {random, Matrix,randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr}=require("./Allgemeines")
 const Wesen= require ("./Wesen")
 module.exports=class Pilz extends Wesen{

@@ -1,3 +1,10 @@
+// Die Naturfee fliegt durch das Spielfeld und bewegt sich dabei immer über zwei Felder gleichzeitig
+// Ist sie komplett von Grasobjekten umgeben sammelt sie Samen.
+// Sammelt sie von einem Grasobjekt dreimal hintereinander Samen, verschwinden diese.
+// 8 Samen ergeben ein neues Grasfeld
+// Ist die Fee komplett von leeren Feldern umgeben, streut sie ihre Samen. 
+// Sie kann maximal 64 Samen tragen.
+// Befindet sich ein Pilz in ihrer Umgebung sammelt sie 24 Samen von ihm und der verschwindet.
 let {random, Matrix,randomMatrix, grassArr, grazerArr, predatorArr, fairyArr, mushroomArr}=require("./Allgemeines")
 const Gras= require("./Gras")
 const Wesen= require ("./Wesen")
